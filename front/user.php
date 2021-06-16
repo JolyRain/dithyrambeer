@@ -1,5 +1,5 @@
 <?php
-$title = "Личный dungeon";
+$title = "Личный кабинет";
 require "header.php";
 
 ?>
@@ -9,12 +9,11 @@ require "header.php";
 <div class="container w-75">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
-            <p class="card-text mb-auto"><b>Юзер</b>: beer_lover777</p>
-            <p class="card-text mb-auto"><b>Пошта</b>: beeeer@beer.com</p>
-            <p class="card-text mb-auto"><b>Статус</b> - нормис</p>
-            <p class="card-text mb-auto"><b>Уровень</b> - всезнающий хуй</p>
-            <p class="card-text mb-auto"><b>Отзывов</b> - дохуя</p>
-
+            <p class="card-text mb-auto"><b>Никнейм</b>: user_name</p>
+            <p class="card-text mb-auto"><b>Почта</b>: pochta@pochta.ru</p>
+            <p class="card-text mb-auto"><b>Роль</b>: user</p>
+            <p class="card-text mb-auto"><b>Уровень</b>: Мудрейший</p>
+            <p class="card-text mb-auto"><b>Отзывов</b>: opinions_amount</p>
         </div>
     </div>
 </div>

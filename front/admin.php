@@ -1,5 +1,5 @@
 <?php
-$title = "Boss of this gym";
+$title = "Личный кабинет";
 require "header.php";
 
 ?>
@@ -37,7 +37,7 @@ require "header.php";
     </ul>
     <div class="tab-content p-3 align-content-lg-center">
         <div class="tab-pane fade show active" id="opinions">
-            <h2 class="h4 mb-3">Описание товара</h2>
+            <h2 class="h4 mb-3">Мои отзывы</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, in et nulla impedit, mollitia eos quae
                 inventore, minus molestiae est consequuntur nobis similique repudiandae reprehenderit fugit cumque voluptatum
                 laudantium tempore.</p>
@@ -46,7 +46,7 @@ require "header.php";
                 quam.</p>
         </div>
         <div class="tab-pane fade" id="users">
-            <h2 class="h4 mb-3">Характеристики товара</h2>
+            <h2 class="h4 mb-3">Пользователи</h2>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae soluta qui labore quas repudiandae illum
                 dolore eum incidunt, quam aut perferendis autem iusto repellat ut nesciunt ullam dignissimos recusandae quo.
             </p>
@@ -55,7 +55,7 @@ require "header.php";
                 asperiores.</p>
         </div>
         <div class="tab-pane fade" id="products">
-            <h2 class="h4 mb-3">Отзывы</h2>
+            <h2 class="h4 mb-3">Описание товара</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt accusantium sapiente animi suscipit magnam ex
                 quasi nihil quas voluptas! Eius minus incidunt iure deserunt dolor praesentium. Ullam aperiam optio omnis!</p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, cupiditate! Aspernatur accusamus dolores
