@@ -5,7 +5,6 @@ class User implements IUser
 {
     private string $login;
     private string $role = Role::USER;
-    //private string $level = Level::USER;
     private $opinions = [];
 
 

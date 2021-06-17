@@ -1,6 +1,7 @@
 <?php
 $title = "Певасек";
 require "header.php";
+
 ?>
 <body>
 <?php showHeader(); ?>

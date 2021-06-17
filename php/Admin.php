@@ -5,7 +5,6 @@ class Admin implements IUser, IAdmin
 {
     private string $login;
     private string $role = Role::ADMIN;
-    //private string $level = Level::USER;
     private $opinions = [];
 
 

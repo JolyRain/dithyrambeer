@@ -1,5 +1,5 @@
 <?php
-$title = "DiphyramBeer";
+$title = "Dithyramb";
 require "header.php";
 ?>
 
