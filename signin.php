@@ -3,7 +3,9 @@ $title = "Войти";
 require "header.php";
 ?>
 
-<body class="body-signin text-center">
+<body class="text-center">
+<div class="container signin ">
+
     <form class="w-25">
         <h1 class="h3 mb-3 fw-normal">DiphyramBeer</h1>
 
@@ -15,7 +17,9 @@ require "header.php";
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
             <label for="floatingPassword">Password</label>
         </div>
-        <button class="btn btn-lg btn-dark w-100" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-dark w-100" type="submit">Sign in</button>
         <p class="mt-3 mb-3 ">У вас еще нет аккаунта? <a class="text-dark" href="signup.php">Зарегистироваться!</a></p>
     </form>
+</div>
+
 </body>

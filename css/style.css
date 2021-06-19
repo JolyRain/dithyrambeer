@@ -1,7 +1,11 @@
 
-.body-signin {
+.signin {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+td {
+    word-wrap:break-word;
 }
