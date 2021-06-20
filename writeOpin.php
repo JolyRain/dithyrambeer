@@ -6,25 +6,35 @@ require "header.php";
 <body class="text-center">
 
 <?php showHeader(); ?>
-<div class="container signin">
+<div class="container w-50">
+    <h1 class="h3 mb-3 fw-normal">Пиво Пивной угар</h1>
+    <form class="w-100">
+        <div class="form-group">
+            <label for="rate-div">Ваша оценка</label>
+            <div class="rating" id="rate-div">
+                <?php
+                require 'vendor/rating.php';
+                print_star();
+                ?>
+            </div>
+            <p class="p-1 text-dark " id="rate"></p>
+        </div>
+        <div class="form-group">
+            <label for="review">Ваш отзыв</label>
+            <textarea class="form-control" id="review" rows="10"></textarea>
+        </div>
+        <p class="hidden p-1 text-danger" id="symb_count">Максимум 1000 символов</script></p>
+        <div class="form-group">
+            <button class="btn mt-3 btn-lg btn-dark w-50" type="submit" id="send_opin">Оставить отзыв</button>
+        </div>
 
-<form class="w-25" method="post" action="registration.php">
-    <h1 class="h3 mb-3 fw-normal">Зарегистрируйтесь</h1>
-    <div class="form-floating mb-3">
-        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com">
-        <label for="email">Email</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" name="login" id="login" placeholder="name@example.com">
-        <label for="login">Login</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input type="password" class="form-control" name="pass" id="pass" placeholder="Password">
-        <label for="floatingPassword">Password</label>
-    </div>
-    <button class="btn btn-lg btn-dark w-100" type="submit">Sign up</button>
-    <p class="mt-3 mb-3 ">У вас уже есть аккаунт? <a class="text-dark" href="signin.php">Войти!</a></p>
-</form>
+    </form>
 </div>
+
+<script>
+    count_symbols()
+    enter_label()
+    leave_label()
+</script>
 
 </body>

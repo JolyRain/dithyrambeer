@@ -5,7 +5,7 @@ $pass = $_POST['pass'];
 
 $pass = md5($pass);
 
-require 'connect.php';
+require 'vendor/connect.php';
 
 /*
  * валидация

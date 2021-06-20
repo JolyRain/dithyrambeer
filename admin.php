@@ -7,15 +7,14 @@ require "header.php";
 <body>
 <?php showHeader(); ?>
 
-<div class="container w-75">
-    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
+<div class="container w-25">
+    <div class="border rounded  mb-4 shadow-sm  position-relative">
+        <div class=" p-4 text-center">
             <p class="card-text mb-auto"><b>Логин</b>: beer_lover777</p>
             <p class="card-text mb-auto"><b>Почта</b>: beeeer@beer.com</p>
             <p class="card-text mb-auto"><b>Роль</b> - нормис</p>
             <p class="card-text mb-auto"><b>Уровень</b> - всезнающий хуй</p>
             <p class="card-text mb-auto"><b>Отзывов всего</b> - дохуя</p>
-
         </div>
     </div>
 </div>

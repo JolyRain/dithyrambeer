@@ -1,10 +1,52 @@
-function showHeader() {
-    let str = "<div class=\"container\">" +
-        "<header class=\"d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom\">" +
-        "<a href=\"../index.php\" class=\"d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark fs-4 text-decoration-none\"DithyramBeer</a>" +
-        " <ul class=\"nav nav-pills \">" +
-        " <a href=\"../user.php\" class=\"nav-link active\">Личный кабинет</a>" +
-        " </ul> </header></div>";
-    document.querySelector('body').innerHtml = '<h1>your html</h1>';
-    console.log("che");
+
+
+function count_symbols() {
+    let review = document.getElementById('review');
+    review.addEventListener('keyup', function (evt) {
+        let text_length = this.value.length;
+        console.log(text_length)
+        if (text_length > 1000) {
+            $('#symb_count').removeClass('hidden')
+            $('#review').addClass('border-danger')
+            $('#send_opin').addClass('disabled')
+        } else {
+            $('#symb_count').addClass('hidden')
+            $('#review').removeClass('border-danger')
+            $('#send_opin').removeClass('disabled')
+        }
+    })
 }
+
+function click_radio(el) {
+    let radio_buttons = document.getElementsByName(el.name);
+    for (let button of radio_buttons) {
+        if (button !== el)
+            button.oldChecked = false;
+    }
+    if (el.oldChecked)
+        el.checked = false;
+    el.oldChecked = el.checked;
+}
+
+function max_rating() {
+    let radio_labels = document.getElementsByClassName('unselectable')
+    return radio_labels.length
+}
+
+function enter_label(el) {
+    let input = document.getElementById(el.getAttribute('for'))
+    let rate = document.getElementById('rate')
+    rate.innerText = input.value + '/' + max_rating();
+}
+
+function leave_label() {
+    let rate = document.getElementById('rate')
+    rate.innerText = '';
+    let radio_buttons = document.getElementsByName('rating');
+    for (let button of radio_buttons) {
+        if (button.checked)
+            rate.innerText = button.value + '/' + max_rating()
+    }
+
+}
+

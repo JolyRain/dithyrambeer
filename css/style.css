@@ -9,3 +9,56 @@
 td {
     word-wrap:break-word;
 }
+
+textarea {
+    resize: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center
+}
+
+.rating>input {
+    display: none
+}
+
+.rating>label {
+    position: relative;
+    font-size: 3vw;
+    color: #000000;
+    cursor: pointer
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0
+}
+.unselectable {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
