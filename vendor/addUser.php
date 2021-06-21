@@ -3,10 +3,13 @@ $email = $_POST['email'];
 $login = $_POST['login'];
 $pass = $_POST['pass'];
 
+
+$role = $_POST['role'] ? array_key_exists('role', $_POST) : 'user';
+
 $pass = md5($pass);
 
-require 'vendor/connect.php';
-
+require 'connect.php';
+global $connect;
 /*
  * валидация
  * существующий логин
@@ -14,13 +17,11 @@ require 'vendor/connect.php';
  */
 $result = mysqli_query($connect,
     "INSERT INTO `users` (`login`, `pass`, `email`, `role`, `opin_count`)
- VALUES('$login', '$pass', '$email', 'user', '0')");
-
-print_r($result);
+ VALUES('$login', '$pass', '$email', '$role', '0')");
 
 $connect->close();
 
-header("Location: /");
+header("Location: ".$_SERVER['HTTP_REFERER']);
 
 
 

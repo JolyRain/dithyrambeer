@@ -31,10 +31,10 @@ function showHeader()
         <a href=\"index.php\" class=\"d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark fs-4 text-decoration-none\">
         Dithyramb</a>
         <ul class=\"nav nav-pills\">
-            <a href=\"signin.php\" class=\"nav-link active text-white bg-dark\">Войти</a>
+            <a href=\"forms/signin.php\" class=\"nav-link active text-white bg-dark\">Войти</a>
         </ul>
         <ul class=\"nav nav-pills \">
-            <a href=\"signup.php\" class=\"nav-link text-dark\">Регистрация</a>
+            <a href=\"forms/signup.php\" class=\"nav-link text-dark\">Регистрация</a>
         </ul>
     </header>
 </div>";

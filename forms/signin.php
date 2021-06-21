@@ -1,8 +1,8 @@
 <?php
 $title = "Войти";
-require "header.php";
+require "../header.php";
 ?>
-
+<link rel="stylesheet" href="../css/style.css">
 <body class="text-center">
 <div class="container signin ">
 

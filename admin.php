@@ -5,30 +5,42 @@ require "header.php";
 ?>
 
 <body>
-<?php showHeader(); ?>
+<?php showHeader();
+require 'vendor/connect.php';
+require 'vendor/defaults.php';
+global $connect;
+
+$_GET['id'] = 25;
+
+$user_id = $_GET['id'];
+
+$user = mysqli_query($connect, "select * from `users` where `user_id` = '$user_id'");
+$user = mysqli_fetch_object($user);
+
+?>
 
 <div class="container w-25">
     <div class="border rounded  mb-4 shadow-sm  position-relative">
         <div class=" p-4 text-center">
-            <p class="card-text mb-auto"><b>Логин</b>: beer_lover777</p>
-            <p class="card-text mb-auto"><b>Почта</b>: beeeer@beer.com</p>
-            <p class="card-text mb-auto"><b>Роль</b> - нормис</p>
-            <p class="card-text mb-auto"><b>Уровень</b> - всезнающий хуй</p>
-            <p class="card-text mb-auto"><b>Отзывов всего</b> - дохуя</p>
+            <p class="card-text mb-auto"><b>Логин</b>: <?= $user->login ?></p>
+            <p class="card-text mb-auto"><b>Почта</b>: <?= $user->email ?></p>
+            <p class="card-text mb-auto"><b>Роль</b>: <?= $user->role ?></p>
+            <p class="card-text mb-auto"><b>Уровень</b>: <?= getUserLevel($user->opin_count) ?></p>
+            <p class="card-text mb-auto"><b>Отзывов всего</b>: <?= $user->opin_count ?></p>
         </div>
     </div>
 </div>
 
 
 <div class="container-fluid w-75">
-    <ul class="nav nav-tabs justify-content-center" id="tab">
-        <li class="nav-item">
+    <ul class="nav nav-tabs" id="tab">
+        <li class="nav-item  w-25 text-center">
             <a class="nav-link text-dark h4 fw-normal" href="#opinions">Мои отзывы</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item w-50 text-center">
             <a class="nav-link h4 text-dark active fw-normal" href="#users">Пользователи</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item w-25 text-center">
             <a class="nav-link h4 text-dark fw-normal" href="#products">Товары</a>
         </li>
     </ul>
@@ -45,19 +57,32 @@ require "header.php";
                 </tr>
                 </thead>
                 <tbody>
-                <?php                 ?>
-                    <tr>
-                        <td>Пиво</td>
-                        <td>5</td>
-                        <td>какое то вкусное пиво кайф</td>
-                        <td><a class="btn btn-dark btn-sm" href="product.php">Страница</a></td>
-                        <td><a class="btn btn-danger btn-sm" href="vendor/deleteOpin.php">Удалить</a></td>
-                    </tr>
+                <?php
+                $opinions = mysqli_query($connect, "select * from `opinions` where `user_id` = '$user_id'");
 
+                while ($opin = mysqli_fetch_object($opinions)) {
+                    $prod = mysqli_query($connect, "select * from `products` where `product_id` = '$opin->product_id'");
+                    $prod = mysqli_fetch_object($prod);
+                    ?>
+                    <tr>
+                        <td><?=$prod->name?></td>
+                        <td><?= $opin->rate ?></td>
+                        <td><?= $opin->review ?></td>
+                        <td><a class="btn btn-dark btn-sm" href="product.php?product_id=<?= $opin->product_id ?>">Страница</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-sm"
+                               href="vendor/deleteOpin.php?user_id=<?= $opin->user_id ?>&product_id=<?= $opin->product_id ?>">Удалить</a>
+                        </td>
+                    </tr>
+                <?php } ?>
                 </tbody>
             </table>
         </div>
         <div class="tab-pane fade show active" id="users">
+            <div class="container-fluid w-25">
+                <a class="btn btn-dark w-100" href="forms/addUserForm.php">Добавить пользователя</a>
+            </div>
             <table class="table table-striped ">
                 <thead class="thead-dark">
                 <tr>
@@ -71,7 +96,6 @@ require "header.php";
                 </thead>
                 <tbody>
                 <?php
-                require 'vendor/connect.php';
                 $users = mysqli_query($connect, "SELECT * FROM `users`");
                 while ($user = mysqli_fetch_object($users)) {
                     ?>
@@ -80,8 +104,10 @@ require "header.php";
                         <td><?= $user->login ?></td>
                         <td><?= $user->email ?></td>
                         <td><?= $user->role ?></td>
-                        <td><a class="btn btn-dark btn-sm" href="user.php">Страница</a></td>
-                        <td><a class="btn btn-danger btn-sm" href="vendor/deleteUser.php">Удалить</a></td>
+                        <td><a class="btn btn-dark btn-sm" href="user.php?id=<?= $user->user_id ?>">Страница</a></td>
+                        <td>
+                            <a class="btn btn-danger btn-sm" href="vendor/deleteUser.php?id=<?= $user->user_id ?>">Удалить</a>
+                        </td>
                     </tr>
                     <?php
                 }
@@ -90,6 +116,9 @@ require "header.php";
             </table>
         </div>
         <div class="tab-pane fade" id="products">
+            <div class="container-fluid w-25">
+                <a class="btn btn-dark w-100" href="forms/addProductForm.php">Добавить товар</a>
+            </div>
             <table class="table table-striped ">
                 <thead class="thead-dark">
                 <tr>
@@ -108,11 +137,11 @@ require "header.php";
                     ?>
                     <tr>
                         <td><?= $product->product_id ?></td>
-                        <td><?= $product->name?></td>
-                        <td><?= $product->rating?></td>
-                        <td><?= $product->opin_count?></td>
+                        <td><?= $product->name ?></td>
+                        <td><?= $product->rating ?></td>
+                        <td><?= $product->opin_count ?></td>
                         <td><a class="btn btn-dark btn-sm" href="product.php">Страница</a></td>
-                        <td><a class="btn btn-danger btn-sm" href="vendor/deleteProduct.php">Удалить</a></td>
+                        <td><a class="btn btn-danger btn-sm" href="vendor/deleteProduct.php?prod_id=<?= $product->product_id ?>">Удалить</a></td>
                     </tr>
                     <?php
                 }

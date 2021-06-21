@@ -1,27 +1,42 @@
 <?php
 $title = "Отзыв";
-require "header.php";
+require "../header.php";
 ?>
+<link rel="stylesheet" href="../css/style.css">
 
 <body class="text-center">
 
-<?php showHeader(); ?>
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="../index.php"
+           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark fs-4 text-decoration-none">
+            Dithyramb</a>
+        <ul class="nav nav-pills\">
+            <a href="signin.php" class="nav-link active text-white bg-dark">Войти</a>
+        </ul>
+        <ul class="nav nav-pills ">
+            <a href="signup.php" class="nav-link text-dark">Регистрация</a>
+        </ul>
+    </header>
+</div>
+
+
+
 <div class="container w-50">
     <h1 class="h3 mb-3 fw-normal">Пиво Пивной угар</h1>
-    <form class="w-100">
+    <form class="w-100" method="post" action="../vendor/addOpin.php">
         <div class="form-group">
             <label for="rate-div">Ваша оценка</label>
             <div class="rating" id="rate-div">
                 <?php
-                require 'vendor/rating.php';
-                print_star();
+                require '../vendor/ratingStars.php';
                 ?>
             </div>
             <p class="p-1 text-dark " id="rate"></p>
         </div>
         <div class="form-group">
             <label for="review">Ваш отзыв</label>
-            <textarea class="form-control" id="review" rows="10"></textarea>
+            <textarea type="text" class="form-control" name="review" id="review" rows="10"></textarea>
         </div>
         <p class="hidden p-1 text-danger" id="symb_count">Максимум 1000 символов</script></p>
         <div class="form-group">
@@ -31,7 +46,7 @@ require "header.php";
     </form>
 </div>
 
-<script>
+<script src="../js/main.js">
     count_symbols()
     enter_label()
     leave_label()

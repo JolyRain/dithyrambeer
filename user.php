@@ -4,26 +4,37 @@ require "header.php";
 
 ?>
 <body>
-<?php showHeader(); ?>
+<?php showHeader();
+require 'vendor/connect.php';
+require 'vendor/defaults.php';
+global $connect;
 
-<div class="container w-75">
-    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-            <p class="card-text mb-auto"><b>Логин</b>: beer_lover777</p>
-            <p class="card-text mb-auto"><b>Почта</b>: beeeer@beer.com</p>
-            <p class="card-text mb-auto"><b>Роль</b> - нормис</p>
-            <p class="card-text mb-auto"><b>Уровень</b> - всезнающий хуй</p>
-            <p class="card-text mb-auto"><b>Отзывов всего</b> - дохуя</p>
+$user_id = $_GET['id'];
+
+$user = mysqli_query($connect, "select * from `users` where `user_id` = '$user_id'");
+$user = mysqli_fetch_object($user);
+?>
+
+<div class="container w-25">
+    <div class="border rounded  mb-4 shadow-sm  position-relative">
+        <div class=" p-4 text-center">
+            <p class="card-text mb-auto"><b>Логин</b>: <?= $user->login ?></p>
+            <p class="card-text mb-auto"><b>Почта</b>: <?= $user->email ?></p>
+            <p class="card-text mb-auto"><b>Роль</b>: <?= $user->role ?></p>
+            <p class="card-text mb-auto"><b>Уровень</b>: <?= getUserLevel($user->opin_count) ?></p>
+            <p class="card-text mb-auto"><b>Отзывов всего</b>: <?= $user->opin_count ?></p>
         </div>
     </div>
 </div>
 
+<?= $connect->close(); ?>
+
 <div class=" text-center">
-    <h1 class="display-6 fw-normal">Мои отзывы</h1>
+    <h6 class="display-6 fw-normal">Мои отзывы</h6>
 </div>
 
-<div class="p-3 align-content-lg-center">
-    <div class="container">
+<div class="p-3 align-content-center">
+    <div class="container w-75">
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>

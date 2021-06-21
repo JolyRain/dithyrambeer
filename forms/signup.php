@@ -1,12 +1,13 @@
 <?php
 $title = "Регистрация";
-require "header.php";
+require "../header.php";
 ?>
+<link rel="stylesheet" href="../css/style.css">
 
 <body class="text-center">
 <div class="container signin" >
 
-<form class="w-25" method="post" action="registration.php">
+<form class="w-25" method="post" action="../vendor/addUser.php">
     <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
     <div class="form-floating mb-3">
         <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com">

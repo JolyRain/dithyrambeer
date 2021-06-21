@@ -1,19 +1,17 @@
 <?php
 
 
-class Admin implements IUser, IAdmin
+class Admin extends User implements IAdmin
 {
-    private string $login;
     private string $role = Role::ADMIN;
-    private $opinions = [];
 
-
-    public function addUser(IUser $user)
+    public function addUser(User $user)
     {
+
         // TODO: Implement addUser() method.
     }
 
-    public function removeUser(IUser $user)
+    public function removeUser(User $user)
     {
         // TODO: Implement removeUser() method.
     }
@@ -23,23 +21,8 @@ class Admin implements IUser, IAdmin
         // TODO: Implement removeProduct() method.
     }
 
-    public function removeUserOpinion(IUser $user, Product $product)
+    public function removeUserOpinion(User $user, Product $product)
     {
         // TODO: Implement removeUserOpinion() method.
-    }
-
-    public function addProduct(Product $product)
-    {
-        // TODO: Implement addProduct() method.
-    }
-
-    public function addOpinion(Product $product, Opinion $opinion)
-    {
-        // TODO: Implement addOpinion() method.
-    }
-
-    public function removeOpinion(Product $product)
-    {
-        // TODO: Implement removeOpinion() method.
     }
 }

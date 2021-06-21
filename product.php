@@ -19,7 +19,7 @@ require 'vendor/connect.php';
 </div>
 <div class="container w-25">
     <div class="container">
-        <a href="writeOpin.php" class="btn btn-dark  w-100">Написать отзыв</a>
+        <a href="forms/addOpinForm.php" class="btn btn-dark  w-100">Написать отзыв</a>
     </div>
 </div>
 <div class="container mt-md-5 w-75">
