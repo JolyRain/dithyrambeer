@@ -2,6 +2,7 @@
 $title = "Dithyramb";
 require "header.php";
 ?>
+<link rel="stylesheet" href="css/style.css">
 
 <body>
 <?php
@@ -29,7 +30,7 @@ showHeader();
                     это моя жизнь нахуй сколько литров утекло с тех пор как я начал пить пиво обожаю готов умереть ради
                     него</p>
                 <div class="container w-25 text-center">
-                    <a href="product.php" class="link-dark w-100">Посмотреть товар</a>
+                    <a href="product.php?product_id=<?= $product->product_id?>" class="link-dark w-100 stretched-link"></a>
                 </div>
             </div>
         </div>

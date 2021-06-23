@@ -1,10 +1,10 @@
 
 
-function count_symbols() {
-    let review = document.getElementById('review');
-    review.addEventListener('keyup', function (evt) {
-        let text_length = this.value.length;
-        console.log(text_length)
+function count_symbols(el) {
+    // let review = document.getElementById('review');
+    // review.addEventListener('keyup', function (evt) {
+        let text_length = el.value.length;
+        // console.log(text_length)
         if (text_length > 1000) {
             $('#symb_count').removeClass('hidden')
             $('#review').addClass('border-danger')
@@ -14,7 +14,7 @@ function count_symbols() {
             $('#review').removeClass('border-danger')
             $('#send_opin').removeClass('disabled')
         }
-    })
+
 }
 
 function click_radio(el) {
@@ -39,11 +39,10 @@ function enter_label(el) {
     rate.innerText = input.value + '/' + max_rating();
 }
 
-function leave_label() {
+function leave_label(el) {
     let rate = document.getElementById('rate')
     rate.innerText = '';
-    let radio_buttons = document.getElementsByName('rating');
-    for (let button of radio_buttons) {
+    for (let button of el) {
         if (button.checked)
             rate.innerText = button.value + '/' + max_rating()
     }

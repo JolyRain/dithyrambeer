@@ -10,23 +10,23 @@ require 'vendor/connect.php';
 require 'vendor/defaults.php';
 global $connect;
 
-$_GET['id'] = 25;
+$_GET['id'] = 26;
 
 $user_id = $_GET['id'];
 
-$user = mysqli_query($connect, "select * from `users` where `user_id` = '$user_id'");
-$user = mysqli_fetch_object($user);
+$admin = mysqli_query($connect, "select * from `users` where `user_id` = '$user_id'");
+$admin = mysqli_fetch_object($admin);
 
 ?>
 
 <div class="container w-25">
     <div class="border rounded  mb-4 shadow-sm  position-relative">
         <div class=" p-4 text-center">
-            <p class="card-text mb-auto"><b>Логин</b>: <?= $user->login ?></p>
-            <p class="card-text mb-auto"><b>Почта</b>: <?= $user->email ?></p>
-            <p class="card-text mb-auto"><b>Роль</b>: <?= $user->role ?></p>
-            <p class="card-text mb-auto"><b>Уровень</b>: <?= getUserLevel($user->opin_count) ?></p>
-            <p class="card-text mb-auto"><b>Отзывов всего</b>: <?= $user->opin_count ?></p>
+            <p class="card-text mb-auto"><b>Логин</b>: <?= $admin->login ?></p>
+            <p class="card-text mb-auto"><b>Почта</b>: <?= $admin->email ?></p>
+            <p class="card-text mb-auto"><b>Роль</b>: <?= $admin->role ?></p>
+            <p class="card-text mb-auto"><b>Уровень</b>: <?= getUserLevel($admin->opin_count) ?></p>
+            <p class="card-text mb-auto"><b>Отзывов всего</b>: <?= $admin->opin_count ?></p>
         </div>
     </div>
 </div>
@@ -98,6 +98,9 @@ $user = mysqli_fetch_object($user);
                 <?php
                 $users = mysqli_query($connect, "SELECT * FROM `users`");
                 while ($user = mysqli_fetch_object($users)) {
+                    if ($user->user_id == $admin->user_id) {
+                        continue;
+                    }
                     ?>
                     <tr>
                         <td><?= $user->user_id ?></td>

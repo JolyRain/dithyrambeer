@@ -20,14 +20,12 @@ require "../header.php";
     </header>
 </div>
 
-
-
 <div class="container w-50">
     <h1 class="h3 mb-3 fw-normal">Новый товар</h1>
-    <form class="w-100" method="post" action="../vendor/addProduct.php">
+    <form class="w-100" method="post" action="../vendor/addProduct.php?user_id=<?= 5 ?>">
         <div class="form-group mb-3">
-            <label for="prod-name" class="mb-1">Название</label>
-            <input type="text" class="form-control text-center" name="prod-name" id="prod-name">
+            <label for="prod_name" class="mb-1">Название</label>
+            <input type="text" class="form-control text-center" name="prod_name" id="prod_name">
         </div>
         <div class="form-group mb-3">
             <label for="rate-div">Ваша оценка</label>

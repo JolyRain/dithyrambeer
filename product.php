@@ -6,52 +6,51 @@ require "header.php";
 <body>
 <?php showHeader();
 require 'vendor/connect.php';
+require 'vendor/defaults.php';
+global $connect, $MAX_RATING;
+
+$product_id = $_GET['product_id'];
+
+$product = mysqli_query($connect, "select * from `products` where `products`.`product_id` = '$product_id'");
+$product = mysqli_fetch_object($product);
+
+
 ?>
 
 <div class="container w-25">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
-            <h3 class="mb-3">Пиво "Два бобра"</h3>
-            <h5 class="mb-3">Рейтинг - 4/5</h5>
-            <h5 class="mb-3">Всего отзывов - 100</h5>
+            <h3 class="mb-3"><?= $product->name ?></h3>
+            <h5 class="mb-3">Рейтинг - <?= $product->rating . '/' . $MAX_RATING ?></h5>
+            <h5 class="mb-3">Всего отзывов - <?= $product->opin_count ?></h5>
         </div>
     </div>
 </div>
 <div class="container w-25">
     <div class="container">
-        <a href="forms/addOpinForm.php" class="btn btn-dark  w-100">Написать отзыв</a>
+        <a href="forms/addOpinForm.php?product_id=<?=$product_id?>&user_id=<?= 5 ?>" class="btn btn-dark  w-100">Написать отзыв</a>
     </div>
 </div>
-<div class="container mt-md-5 w-75">
-    <div class="border rounded-3  mb-4 shadow-sm  position-relative">
-        <div class="p-4">
-            <h5 class="mb-1">Пользователь - логин</h5>
-            <h6 class="mb-1">Оценка - 4/5</h6>
-            <p>
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-            </p>
-        </div>
-    </div>
-    <div class="border rounded-3  mb-4 shadow-sm  position-relative">
-        <div class="p-4">
-            <h5 class="mb-1">Пользователь - логин</h5>
-            <h6 class="mb-1">Оценка - 4/5</h6>
-            <p>
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-                Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО Я ЛЮБЛЮ ПИВО
-            </p>
-        </div>
-    </div>
+<?php
+$opinions = mysqli_query($connect, "select * from `opinions` where `opinions`.`product_id` = '$product_id'");
+while ($opinion = mysqli_fetch_object($opinions)) {
+    $user_id = $opinion->user_id;
+    $result = mysqli_query($connect, "select `login` from `users` where `users`.`user_id` = '$user_id'");
+    $result = mysqli_fetch_object($result);
+    $user_login = $result->login;
+    ?>
 
-</div>
+    <div class="container mt-md-5 w-75">
+        <div class="border rounded-3  mb-4 shadow-sm">
+            <div class="p-4">
+                <h5 class="mb-1"><?= $user_login ?></h5>
+                <h6 class="mb-1">Оценка - <?= $opinion->rate ?></h6>
+                <p>
+                    <?= $opinion->review ?>
+                </p>
+            </div>
+        </div>
+    </div>
+<?php } ?>
 
 </body>
