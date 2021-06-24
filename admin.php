@@ -1,18 +1,23 @@
 <?php
+session_start();
 $title = "Личный кабинет";
 require "header.php";
-
-?>
-
-<body>
-<?php showHeader();
+require 'vendor/scripts.php';
 require 'vendor/connect.php';
 require 'vendor/defaults.php';
 global $connect;
 
-$_GET['id'] = 26;
+if (!session_on() || $_SESSION['user']['role'] == 'user') {
+    header("Location: index.php");
+}
+$user = $_SESSION['user'];
+?>
 
-$user_id = $_GET['id'];
+<body>
+<?php
+showHeader(session_on());
+
+$user_id = $user['user_id'];
 
 $admin = mysqli_query($connect, "select * from `users` where `user_id` = '$user_id'");
 $admin = mysqli_fetch_object($admin);
@@ -81,7 +86,7 @@ $admin = mysqli_fetch_object($admin);
         </div>
         <div class="tab-pane fade show active" id="users">
             <div class="container-fluid w-25">
-                <a class="btn btn-dark w-100" href="forms/addUserForm.php">Добавить пользователя</a>
+                <a class="btn btn-dark w-100" href="addUserForm.php">Добавить пользователя</a>
             </div>
             <table class="table table-striped ">
                 <thead class="thead-dark">
@@ -120,7 +125,7 @@ $admin = mysqli_fetch_object($admin);
         </div>
         <div class="tab-pane fade" id="products">
             <div class="container-fluid w-25">
-                <a class="btn btn-dark w-100" href="forms/addProductForm.php">Добавить товар</a>
+                <a class="btn btn-dark w-100" href="addProductForm.php">Добавить товар</a>
             </div>
             <table class="table table-striped ">
                 <thead class="thead-dark">

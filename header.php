@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -20,21 +20,29 @@
     </title>
 </head>
 <?php
-function showHeader()
+function showHeader(bool $session_on)
 {
-    echo
-    "<div class=\"container\"> 
-    <header class=\"d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom\">
-        <a href=\"index.php\" class=\"d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark fs-4 text-decoration-none\">
-        Dithyramb</a>
-        <ul class=\"nav nav-pills\">
-            <a href=\"forms/signin.php\" class=\"nav-link active text-white bg-dark\">Войти</a>
-        </ul>
-        <ul class=\"nav nav-pills \">
-            <a href=\"forms/signup.php\" class=\"nav-link text-dark\">Регистрация</a>
-        </ul>
-    </header>
-</div>";
+    $label = $session_on ? "Выйти" : "Регистрация";
+    $path = $session_on ? "vendor/out.php" : "signup.php";
+
+    $labelActive = $session_on ? "Личный кабинет" : "Войти";
+    $pathActive = $session_on ? ($_SESSION['user']['role'] == 'admin' ? "admin.php" : "user.php") : "signin.php";
+
+    ?>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="index.php"
+               class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark fs-4 text-decoration-none">
+                Dithyramb</a>
+            <ul class="nav nav-pills\">
+                <a href="<?=$pathActive?>" class="nav-link active text-white bg-dark"><?=$labelActive?></a>
+            </ul>
+            <ul class="nav nav-pills ">
+                <a href="<?=$path?>" class="nav-link text-dark"><?=$label?></a>
+            </ul>
+        </header>
+    </div>
+    <?php
 }
 
 ?>

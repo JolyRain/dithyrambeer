@@ -1,15 +1,22 @@
 <?php
+session_start();
 $title = "Личный кабинет";
 require "header.php";
+require 'vendor/scripts.php';
+if (!session_on()) {
+    header("Location: index.php");
 
+}
+$user = $_SESSION['user'];
 ?>
 <body>
-<?php showHeader();
+<?php
+showHeader(session_on());
 require 'vendor/connect.php';
 require 'vendor/defaults.php';
 global $connect;
 
-$user_id = $_GET['id'];
+$user_id = $user['user_id'];
 
 $user = mysqli_query($connect, "select * from `users` where `user_id` = '$user_id'");
 $user = mysqli_fetch_object($user);
@@ -26,8 +33,6 @@ $user = mysqli_fetch_object($user);
         </div>
     </div>
 </div>
-
-<?= $connect->close(); ?>
 
 <div class=" text-center">
     <h6 class="display-6 fw-normal">Мои отзывы</h6>
@@ -46,14 +51,25 @@ $user = mysqli_fetch_object($user);
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Пиво</td>
-                <td>5</td>
-                <td>какое то вкусное пиво кайф</td>
-                <td><a class="btn btn-dark btn-sm" href="product.php">Страница</a></td>
-                <td><a class="btn btn-danger btn-sm" href="vendor/deleteOpin.php">Удалить</a></td>
-            </tr>
+            <?php
+            $opinions = mysqli_query($connect, "select * from `opinions` where `user_id` = '$user_id'");
 
+            while ($opin = mysqli_fetch_object($opinions)) {
+                $prod = mysqli_query($connect, "select * from `products` where `product_id` = '$opin->product_id'");
+                $prod = mysqli_fetch_object($prod);
+                ?>
+                <tr>
+                    <td><?=$prod->name?></td>
+                    <td><?= $opin->rate ?></td>
+                    <td><?= $opin->review ?></td>
+                    <td><a class="btn btn-dark btn-sm" href="product.php?product_id=<?= $opin->product_id ?>">Страница</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger btn-sm"
+                           href="vendor/deleteOpin.php?user_id=<?= $opin->user_id ?>&product_id=<?= $opin->product_id ?>">Удалить</a>
+                    </td>
+                </tr>
+            <?php } ?>
             </tbody>
         </table>
     </div>

@@ -1,10 +1,12 @@
 <?php
+session_start();
 $title = "Певасек";
 require "header.php";
+require 'vendor/scripts.php';
 
 ?>
 <body>
-<?php showHeader();
+<?php showHeader(session_on());
 require 'vendor/connect.php';
 require 'vendor/defaults.php';
 global $connect, $MAX_RATING;
@@ -26,18 +28,25 @@ $product = mysqli_fetch_object($product);
         </div>
     </div>
 </div>
-<div class="container w-25">
-    <div class="container">
-        <a href="forms/addOpinForm.php?product_id=<?=$product_id?>&user_id=<?= 5 ?>" class="btn btn-dark  w-100">Написать отзыв</a>
-    </div>
-</div>
 <?php
+if (session_on()) {
+    ?>
+    <div class="container w-25">
+        <div class="container">
+            <a href="addOpinForm.php?product_id=<?= $product_id ?>&user_id=<?= $_SESSION['user']['user_id'] ?>"
+               class="btn btn-dark  w-100">Написать
+                отзыв</a>
+        </div>
+    </div>
+    <?php
+}
 $opinions = mysqli_query($connect, "select * from `opinions` where `opinions`.`product_id` = '$product_id'");
 while ($opinion = mysqli_fetch_object($opinions)) {
     $user_id = $opinion->user_id;
     $result = mysqli_query($connect, "select `login` from `users` where `users`.`user_id` = '$user_id'");
     $result = mysqli_fetch_object($result);
     $user_login = $result->login;
+
     ?>
 
     <div class="container mt-md-5 w-75">
