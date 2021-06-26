@@ -1,6 +1,11 @@
 <?php
+session_start();
+require 'scripts.php';
+if (!session_on()) {
+    header('Location: ../index.php');
+}
 require 'connect.php';
-$prod_id = $_GET['prod_id'];
+$prod_id = $_GET['product_id'];
 
 global $connect;
 mysqli_query($connect, "delete from `products` where `products`.`product_id` = '$prod_id'");
@@ -13,6 +18,6 @@ foreach (mysqli_fetch_row($users_id) as $id) {
 }
 mysqli_query($connect, "delete from `opinions` where `opinions`.`product_id` = '$prod_id'");
 
-$connect->close();
-
 header("Location: " . $_SERVER['HTTP_REFERER']);
+
+$connect->close();

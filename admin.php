@@ -1,27 +1,30 @@
 <?php
 session_start();
-$title = "Личный кабинет";
-require "header.php";
-require 'vendor/scripts.php';
-require 'vendor/connect.php';
-require 'vendor/defaults.php';
+global $user_id;
+if (array_key_exists('user_id', $_GET)) {
+    $user_id = $_GET['user_id'];
+} else {
+    header('Location: index.php');
+}
+
+require 'engine/connect.php';
+require 'engine/defaults.php';
+require 'engine/scripts.php';
 global $connect;
 
-if (!session_on() || $_SESSION['user']['role'] == 'user') {
-    header("Location: index.php");
+$admin = mysqli_query($connect, "select * from `users` where `user_id` = '$user_id'");
+$admin = mysqli_fetch_object($admin);
+
+if (!isPersonalPage($admin->user_id)) {
+    header('Location: user.php?user_id=' . $admin->user_id);
 }
-$user = $_SESSION['user'];
+$title = $admin->login;
+require "header.php";
 ?>
 
 <body>
 <?php
 showHeader(session_on());
-
-$user_id = $user['user_id'];
-
-$admin = mysqli_query($connect, "select * from `users` where `user_id` = '$user_id'");
-$admin = mysqli_fetch_object($admin);
-
 ?>
 
 <div class="container w-25">
@@ -56,6 +59,8 @@ $admin = mysqli_fetch_object($admin);
                 <tr>
                     <th scope="col">Название</th>
                     <th scope="col">Оценка</th>
+                    <th scope="col">Достоинства</th>
+                    <th scope="col">Недостатки</th>
                     <th scope="col">Отзыв</th>
                     <th scope="col">
                     <th scope="col"></th>
@@ -70,14 +75,16 @@ $admin = mysqli_fetch_object($admin);
                     $prod = mysqli_fetch_object($prod);
                     ?>
                     <tr>
-                        <td><?=$prod->name?></td>
+                        <td><?= $prod->name ?></td>
                         <td><?= $opin->rate ?></td>
+                        <td><?= '+' ?></td>
+                        <td><?= '-' ?></td>
                         <td><?= $opin->review ?></td>
                         <td><a class="btn btn-dark btn-sm" href="product.php?product_id=<?= $opin->product_id ?>">Страница</a>
                         </td>
                         <td>
                             <a class="btn btn-danger btn-sm"
-                               href="vendor/deleteOpin.php?user_id=<?= $opin->user_id ?>&product_id=<?= $opin->product_id ?>">Удалить</a>
+                               href="engine/deleteOpin.php?user_id=<?= $opin->user_id ?>&product_id=<?= $opin->product_id ?>">Удалить</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -95,14 +102,15 @@ $admin = mysqli_fetch_object($admin);
                     <th scope="col">Логин</th>
                     <th scope="col">Почта</th>
                     <th scope="col">Роль</th>
-                    <th scope="col">
+                    <th scope="col">Отзывов всего</th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
                 $users = mysqli_query($connect, "SELECT * FROM `users`");
-                while ($user = mysqli_fetch_object($users)) {
+                while ($user = mysqli_fetch_object($users)):
                     if ($user->user_id == $admin->user_id) {
                         continue;
                     }
@@ -112,14 +120,14 @@ $admin = mysqli_fetch_object($admin);
                         <td><?= $user->login ?></td>
                         <td><?= $user->email ?></td>
                         <td><?= $user->role ?></td>
-                        <td><a class="btn btn-dark btn-sm" href="user.php?id=<?= $user->user_id ?>">Страница</a></td>
+                        <td><?= $user->opin_count ?></td>
+                        <td><a class="btn btn-dark btn-sm" href="user.php?user_id=<?= $user->user_id ?>">Страница</a>
+                        </td>
                         <td>
-                            <a class="btn btn-danger btn-sm" href="vendor/deleteUser.php?id=<?= $user->user_id ?>">Удалить</a>
+                            <a class="btn btn-danger btn-sm" href="engine/deleteUser.php?user_id=<?= $user->user_id ?>">Удалить</a>
                         </td>
                     </tr>
-                    <?php
-                }
-                ?>
+                <?php endwhile; ?>
                 </tbody>
             </table>
         </div>
@@ -141,19 +149,18 @@ $admin = mysqli_fetch_object($admin);
                 <tbody>
                 <?php
                 $products = mysqli_query($connect, "SELECT * FROM `products`");
-                while ($product = mysqli_fetch_object($products)) {
-                    ?>
+                while ($product = mysqli_fetch_object($products)): ?>
                     <tr>
                         <td><?= $product->product_id ?></td>
                         <td><?= $product->name ?></td>
-                        <td><?= $product->rating ?></td>
+                        <td><?= roundRating($product->rating) ?></td>
                         <td><?= $product->opin_count ?></td>
-                        <td><a class="btn btn-dark btn-sm" href="product.php">Страница</a></td>
-                        <td><a class="btn btn-danger btn-sm" href="vendor/deleteProduct.php?prod_id=<?= $product->product_id ?>">Удалить</a></td>
+                        <td><a class="btn btn-dark btn-sm" href="product.php?product_id=<?= $product->product_id ?>">Страница</a>
+                        </td>
+                        <td><a class="btn btn-danger btn-sm"
+                               href="engine/deleteProduct.php?product_id=<?= $product->product_id ?>">Удалить</a></td>
                     </tr>
-                    <?php
-                }
-                ?>
+                <?php endwhile; ?>
                 </tbody>
             </table>
         </div>

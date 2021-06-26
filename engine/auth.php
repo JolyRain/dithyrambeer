@@ -19,17 +19,14 @@ if (mysqli_num_rows($result) > 0) {
         "role" => $user->role,
         "opin_count" => $user->opin_count
     ];
-    echo 0;
     if ($user->role == 'admin') {
-        header("Location: ../admin.php");
+        header("Location: ../admin.php?user_id=" . $user->user_id);
     } else {
-        echo 2;
-        header("Location: ../user.php");
+        header("Location: ../user.php?user_id=" . $user->user_id);
     }
 } else {
-    echo 3;
     $_SESSION['message'] = 'Неверный логин или пароль';
     $_SESSION['msg-color'] = 'border-danger';
     $connect->close();
-    //header("Location: " . $_SERVER['HTTP_REFERER']);
+    header("Location: " . $_SERVER['HTTP_REFERER']);
 }

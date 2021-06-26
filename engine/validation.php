@@ -16,7 +16,6 @@ function isUniqLogin($login): bool
 {
     global $connect;
     $result = mysqli_query($connect, "select 1 from `users` where `users`.`login` = '$login'");
-    print_r($result->num_rows);
     return $result->num_rows == 0;
 }
 

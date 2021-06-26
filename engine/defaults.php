@@ -11,7 +11,7 @@ function getUserLevel($opin_count)
         return 'эксперт';
     } else if ($opin_count < 500) {
         return 'мудрец';
-    } else if ($opin_count < 1000) {
+    } else {
         return 'легенда';
     }
 }
