@@ -28,18 +28,20 @@ showHeader(session_on());
 ?>
 
 <div class="container w-25">
-    <div class="border rounded  mb-4 shadow-sm  position-relative">
-        <div class=" p-4 text-center">
-            <p class="card-text mb-auto"><b>Логин</b>: <?= $admin->login ?></p>
-            <p class="card-text mb-auto"><b>Почта</b>: <?= $admin->email ?></p>
-            <p class="card-text mb-auto"><b>Роль</b>: <?= $admin->role ?></p>
-            <p class="card-text mb-auto"><b>Уровень</b>: <?= getUserLevel($admin->opin_count) ?></p>
-            <p class="card-text mb-auto"><b>Отзывов всего</b>: <?= $admin->opin_count ?></p>
+    <div class="card border border-secondary rounded mb-4 shadow-sm text-center">
+        <div class="card-header text-white bg-dark">
+            <h5 class="m-0 fw-normal"><?= $admin->login ?></h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled ">
+                <li class="card-text mb-auto"><b>Почта</b>: <?= $admin->email ?></li>
+                <li class="card-text mb-auto"><b>Роль</b>: <?= $admin->role ?></li>
+                <li class="card-text mb-auto"><b>Уровень</b>: <?= getUserLevel($admin->opin_count) ?></li>
+                <li class="card-text mb-auto"><b>Отзывов всего</b>: <?= $admin->opin_count ?></li>
+            </ul>
         </div>
     </div>
 </div>
-
-
 <div class="container-fluid w-75">
     <ul class="nav nav-tabs" id="tab">
         <li class="nav-item  w-25 text-center">
@@ -70,10 +72,9 @@ showHeader(session_on());
                 <?php
                 $opinions = mysqli_query($connect, "select * from `opinions` where `user_id` = '$user_id'");
 
-                while ($opin = mysqli_fetch_object($opinions)) {
+                while ($opin = mysqli_fetch_object($opinions)):
                     $prod = mysqli_query($connect, "select * from `products` where `product_id` = '$opin->product_id'");
-                    $prod = mysqli_fetch_object($prod);
-                    ?>
+                    $prod = mysqli_fetch_object($prod); ?>
                     <tr>
                         <td><?= $prod->name ?></td>
                         <td><?= $opin->rate ?></td>
@@ -87,7 +88,7 @@ showHeader(session_on());
                                href="engine/deleteOpin.php?user_id=<?= $opin->user_id ?>&product_id=<?= $opin->product_id ?>">Удалить</a>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php endwhile; ?>
                 </tbody>
             </table>
         </div>

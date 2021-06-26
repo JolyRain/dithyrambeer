@@ -3,7 +3,7 @@ session_start();
 $title = "Добавить пользователя";
 require "header.php";
 require 'engine/scripts.php';
-if (!session_on() or !isAdminSession()) {
+if (!isAdminSession()) {
     header("Location: index.php");
 }
 ?>

@@ -1,19 +1,17 @@
-
-
 function count_symbols(el) {
     // let review = document.getElementById('review');
     // review.addEventListener('keyup', function (evt) {
-        let text_length = el.value.length;
-        // console.log(text_length)
-        if (text_length > 1000) {
-            $('#symb_count').removeClass('hidden')
-            $('#review').addClass('border-danger')
-            $('#send_opin').addClass('disabled')
-        } else {
-            $('#symb_count').addClass('hidden')
-            $('#review').removeClass('border-danger')
-            $('#send_opin').removeClass('disabled')
-        }
+    let text_length = el.value.length;
+    // console.log(text_length)
+    if (text_length > 1000) {
+        $('#symb_count').removeClass('hidden')
+        $('#review').addClass('border-danger')
+        $('#send_opin').addClass('disabled')
+    } else {
+        $('#symb_count').addClass('hidden')
+        $('#review').removeClass('border-danger')
+        $('#send_opin').removeClass('disabled')
+    }
 
 }
 
@@ -39,13 +37,19 @@ function enter_label(el) {
     rate.innerText = input.value + '/' + max_rating();
 }
 
-function leave_label(el) {
+function leave_label() {
     let rate = document.getElementById('rate')
-    rate.innerText = '';
-    for (let button of el) {
-        if (button.checked)
+    let input = document.getElementsByName('rate');
+    rate.innerText = input.value + '/' + max_rating();
+    for (let button of input) {
+        if (button.checked) {
             rate.innerText = button.value + '/' + max_rating()
+            return
+        }
     }
-
+    rate.innerText = '0/' + max_rating();
 }
+
+
+
 

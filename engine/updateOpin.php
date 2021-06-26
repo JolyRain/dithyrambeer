@@ -44,6 +44,6 @@ where `user_id` = '$user_id' and `product_id` = '$product_id'");
 
 mysqli_query($connect, "update `products` set `rating` = '$newRating' where `products`.`product_id` = '$product_id'");
 
-header("Location: ".$_SERVER['HTTP_REFERER']);
+header("Location: ../product.php?product_id=" . $product_id);
 
 $connect->close();

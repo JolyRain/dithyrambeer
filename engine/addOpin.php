@@ -33,4 +33,4 @@ where `users`.`user_id` = '$user_id'");
 
 $connect->close();
 
-header("Location: ".$_SERVER['HTTP_REFERER']);
+header("Location: ../product.php?product_id=" . $product_id);

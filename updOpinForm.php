@@ -39,16 +39,15 @@ $opinion = mysqli_fetch_object($opinion);
                 require 'engine/defaults.php';
                 $name = 'rate';
                 global $MAX_RATING;
-                for ($value = $MAX_RATING; $value > 0; $value--) { ?>
+                for ($value = $MAX_RATING; $value > 0; $value--): ?>
                     <input type="radio" class="radio" onclick="click_radio(this)" name="<?= $name ?>"
                            value="<?= $value ?>"
                            id="<?= $name . $value ?>" <?= $value == $opinion->rate ? 'checked' : ''; ?>>
-                    <label onmouseenter="enter_label(this)" onmouseleave="leave_label(this)" for="<?= $name . $value ?>"
+                    <label onmouseenter="enter_label(this)" onmouseleave="leave_label()" for="<?= $name . $value ?>"
                            class="unselectable">☆</label>
-                <?php }
-                ?>
+                <?php endfor; ?>
             </div>
-            <p class="p-1 text-dark " id="rate"></p>
+            <p class="p-1 text-dark " id="rate"><?= $opinion->rate . '/' . $MAX_RATING ?></p>
         </div>
         <div class="form-group">
             <label for="review">Ваш отзыв</label>

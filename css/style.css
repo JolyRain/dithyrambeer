@@ -83,3 +83,7 @@ textarea {
 .user-link:hover {
     text-decoration: underline;
 }
+
+.card-link:hover {
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.2);
+}

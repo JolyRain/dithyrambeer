@@ -1,7 +1,13 @@
 <?php
 session_start();
 require 'connect.php';
+require 'scripts.php';
 global $connect;
+
+if (!isAdminSession()) {
+    header('Location: ../index.php');
+    die();
+}
 
 $user_id = $_GET['user_id'];
 $prod_name = $_POST['prod_name'];

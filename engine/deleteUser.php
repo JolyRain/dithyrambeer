@@ -1,8 +1,9 @@
 <?php
 session_start();
 require 'scripts.php';
-if (!session_on()) {
+if (!isAdminSession()) {
     header('Location: ../index.php');
+    die();
 }
 require 'connect.php';
 $user_id = $_GET['user_id'];

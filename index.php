@@ -23,19 +23,23 @@ showHeader(session_on());
 //?>
 
 <div class="container ">
-    <div class="row row-cols-1 row-cols-md-2 mb-3 text-center">
+    <div class="row row-cols-3 row-cols-md-3 mb-3 text-center">
         <?php
         $products = mysqli_query($connect, "SELECT * FROM `products`");
         while ($product = mysqli_fetch_object($products)): ?>
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="p-4">
-                        <h3 class="mb-3"><?= $product->name ?></h3>
-                        <h5 class="mb-3">Рейтинг - <?= roundRating($product->rating) . '/' . $MAX_RATING ?></h5>
-                        <h5 class="mb-3">Отзывов всего - <?= $product->opin_count ?></h5>
-                        <a href="product.php?product_id=<?= $product->product_id ?>"
-                           class="link-dark stretched-link"></a>
+            <div class="col ">
+                <div class="card card-link border border-secondary rounded mb-4  text-center">
+                    <div class="card-header  text-white bg-dark">
+                        <h5 class="m-0 fw-normal"><?= $product->name ?></h5>
                     </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li class="fw-normal fs-5">Рейтинг - <?= roundRating($product->rating) . '/' . $MAX_RATING ?></li>
+                            <li  class="fw-normal fs-5">Всего отзывов - <?= $product->opin_count ?></li>
+                        </ul>
+                    </div>
+                    <a href="product.php?product_id=<?= $product->product_id ?>"
+                       class="link-dark stretched-link"></a>
                 </div>
             </div>
         <?php endwhile; ?>

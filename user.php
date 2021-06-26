@@ -24,13 +24,17 @@ showHeader(session_on());
 ?>
 
 <div class="container w-25">
-    <div class="border rounded  mb-4 shadow-sm  position-relative">
-        <div class=" p-4 text-center">
-            <p class="card-text mb-auto"><b>Логин</b>: <?= $user->login ?></p>
-            <p class="card-text mb-auto"><b>Почта</b>: <?= $user->email ?></p>
-            <p class="card-text mb-auto"><b>Роль</b>: <?= $user->role ?></p>
-            <p class="card-text mb-auto"><b>Уровень</b>: <?= getUserLevel($user->opin_count) ?></p>
-            <p class="card-text mb-auto"><b>Отзывов всего</b>: <?= $user->opin_count ?></p>
+    <div class="card border border-secondary rounded mb-4 shadow-sm text-center">
+        <div class="card-header text-white bg-dark">
+            <h5 class="m-0 fw-normal"><?= $user->login ?></h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled">
+                <li class="card-text mb-auto"><b>Почта</b>: <?= $user->email ?></li>
+                <li class="card-text mb-auto"><b>Роль</b>: <?= $user->role ?></li>
+                <li class="card-text mb-auto"><b>Уровень</b>: <?= getUserLevel($user->opin_count) ?></li>
+                <li class="card-text mb-auto"><b>Отзывов всего</b>: <?= $user->opin_count ?></li>
+            </ul>
         </div>
     </div>
 </div>
@@ -47,7 +51,7 @@ showHeader(session_on());
                 <th scope="col">Товар</th>
                 <th scope="col">Оценка</th>
                 <th scope="col">Отзыв</th>
-                <?php if (isPersonalPage($user_id)): ?>
+                <?php if (isPersonalPage($user_id) or isAdminSession()): ?>
                 <th scope="col">
                     <?php endif; ?>
                 <th scope="col"></th>
@@ -69,7 +73,7 @@ showHeader(session_on());
                            href="product.php?product_id=<?= $opin->product_id ?>">Страница</a>
                     </td>
 
-                    <?php if (isPersonalPage($user_id)): ?>
+                    <?php if (isPersonalPage($user_id) or isAdminSession()): ?>
                         <td>
                             <a class="btn btn-danger btn-sm"
                                href="engine/deleteOpin.php?user_id=<?= $opin->user_id ?>&product_id=<?= $opin->product_id ?>">Удалить</a>
