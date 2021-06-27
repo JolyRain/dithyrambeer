@@ -9,12 +9,6 @@ require 'connect.php';
 require 'validation.php';
 global $connect;
 
-function setValue($key)
-{
-    $value = array_key_exists($key, $_POST) ? $_POST[$key] : '';
-    $value = filter_var($value, FILTER_SANITIZE_STRING);
-    return strlen($value) > 0 ? $value : null;
-}
 
 $user_id = $_GET['user_id'];
 $user = mysqli_query($connect, "select * from `users` where `user_id` = '$user_id'");

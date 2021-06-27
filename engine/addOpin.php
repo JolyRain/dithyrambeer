@@ -1,7 +1,13 @@
 <?php
-
+session_start();
 require 'connect.php';
 require 'defaults.php';
+require 'scripts.php';
+
+if (!session_on()) {
+    header('Location: ../index.php');
+    die();
+}
 
 global $connect, $MAX_RATING;
 global $product_id, $user_id;
