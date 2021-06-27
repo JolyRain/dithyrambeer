@@ -2,6 +2,8 @@
 require 'connect.php';
 global $connect;
 
+
+
 function isEqualPass($pass, $passConfirm): bool
 {
     return $pass == $passConfirm;
@@ -33,9 +35,9 @@ function isUniqProd($prodName): bool
     return $result->num_rows == 0;
 }
 
-function signupMessage($email, $login, $pass, $passConfirm): string
+function userMessage($email, $login, $pass, $passConfirm): string
 {
-    if (emptyFields($email, $login, $pass, $passConfirm)) {
+    if (isEmptyFields($email, $login, $pass, $passConfirm)) {
         return 'Заполните все поля';
     }
 
@@ -52,7 +54,7 @@ function signupMessage($email, $login, $pass, $passConfirm): string
     }
 }
 
-function emptyFields($email, $login, $pass, $passConfirm): bool
+function isEmptyFields($email, $login, $pass, $passConfirm): bool
 {
     return isEmptyField($email) or isEmptyField($login) or isEmptyField($pass) or isEmptyField($passConfirm);
 }
@@ -63,11 +65,10 @@ function isEmptyField($field): bool
     return strlen($field) == 0;
 }
 
-
-function signupValidate($email, $login, $pass, $passConfirm): bool
+function isValidUserData($email, $login, $pass, $passConfirm): bool
 {
     return isValidEmail($email) and isUniqLogin($login) and isUniqEmail($email) and isEqualPass($pass, $passConfirm)
-        and !emptyFields($email, $login, $pass, $passConfirm);
+        and !isEmptyFields($email, $login, $pass, $passConfirm);
 }
 
 

@@ -5,6 +5,7 @@ require "header.php";
 require 'engine/scripts.php';
 if (!isAdminSession()) {
     header("Location: index.php");
+    die();
 }
 ?>
 <link rel="stylesheet" href="css/style.css">
@@ -12,14 +13,14 @@ if (!isAdminSession()) {
 <body class="text-center">
 <?php
 showHeader(session_on());
-$user = $_SESSION['user'];
+$admin = $_SESSION['user'];
 ?>
 
 <div class="container w-50">
     <div class="container w-75 mb-3">
         <h6 class="fs-4 w-75 fw-normal text-white rounded-3 w-100 py-1 btn-dark">Новый товар</h6>
     </div>
-    <form class="w-100" method="post" action="engine/addProduct.php?user_id=<?=$user['user_id']?>">
+    <form class="w-100" method="post" action="engine/addProduct.php?user_id=<?=$admin['user_id']?>">
         <div class="form-group mb-3">
             <label for="prod_name" class="mb-1">Название</label>
             <input type="text" class="form-control text-center" name="prod_name" id="prod_name">

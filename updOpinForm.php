@@ -29,7 +29,10 @@ $opinion = mysqli_fetch_object($opinion);
 ?>
 
 <div class="container w-50">
-    <h1 class="h3 mb-3 fw-normal"><?= $product->name ?></h1>
+    <div class="container w-75 mb-3">
+        <a href="product.php?product_id=<?= $product->product_id ?>"
+           class="fs-4 w-75 fw-normal text-white rounded-3 btn btn-dark"><?= $product->name ?></a>
+    </div>
     <form class="w-100" method="post"
           action="engine/updateOpin.php?product_id=<?= $product_id ?>&user_id=<?= $user_id ?>">
         <div class="form-group">

@@ -61,10 +61,9 @@ showHeader(session_on());
                 <tr>
                     <th scope="col">Название</th>
                     <th scope="col">Оценка</th>
-                    <th scope="col">Достоинства</th>
-                    <th scope="col">Недостатки</th>
                     <th scope="col">Отзыв</th>
-                    <th scope="col">
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -78,10 +77,13 @@ showHeader(session_on());
                     <tr>
                         <td><?= $prod->name ?></td>
                         <td><?= $opin->rate ?></td>
-                        <td><?= '+' ?></td>
-                        <td><?= '-' ?></td>
                         <td><?= $opin->review ?></td>
-                        <td><a class="btn btn-dark btn-sm" href="product.php?product_id=<?= $opin->product_id ?>">Страница</a>
+                        <td>
+                            <a class="btn btn-dark btn-sm" href="product.php?product_id=<?= $opin->product_id ?>">Страница</a>
+                        </td>
+                        <td>
+                            <a class="btn bg-white border-dark btn-sm"
+                               href="updOpinForm.php?user_id=<?= $opin->user_id ?>&product_id=<?= $opin->product_id ?>">Изменить</a>
                         </td>
                         <td>
                             <a class="btn btn-danger btn-sm"
@@ -106,6 +108,7 @@ showHeader(session_on());
                     <th scope="col">Отзывов всего</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -122,10 +125,16 @@ showHeader(session_on());
                         <td><?= $user->email ?></td>
                         <td><?= $user->role ?></td>
                         <td><?= $user->opin_count ?></td>
-                        <td><a class="btn btn-dark btn-sm" href="user.php?user_id=<?= $user->user_id ?>">Страница</a>
+                        <td>
+                            <a class="btn btn-dark btn-sm" href="user.php?user_id=<?= $user->user_id ?>">Страница</a>
                         </td>
                         <td>
-                            <a class="btn btn-danger btn-sm" href="engine/deleteUser.php?user_id=<?= $user->user_id ?>">Удалить</a>
+                            <a class="btn text-dark bg-white border-dark btn-sm"
+                               href="updUserForm.php?user_id=<?= $user->user_id ?>">Изменить</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-sm"
+                               href="engine/deleteUser.php?user_id=<?= $user->user_id ?>">Удалить</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -143,7 +152,8 @@ showHeader(session_on());
                     <th scope="col">Название</th>
                     <th scope="col">Рейтинг</th>
                     <th scope="col">Отзывов всего</th>
-                    <th scope="col">
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -156,10 +166,18 @@ showHeader(session_on());
                         <td><?= $product->name ?></td>
                         <td><?= roundRating($product->rating) ?></td>
                         <td><?= $product->opin_count ?></td>
-                        <td><a class="btn btn-dark btn-sm" href="product.php?product_id=<?= $product->product_id ?>">Страница</a>
+                        <td>
+                            <a class="btn btn-dark btn-sm"
+                               href="product.php?product_id=<?= $product->product_id ?>">Страница</a>
                         </td>
-                        <td><a class="btn btn-danger btn-sm"
-                               href="engine/deleteProduct.php?product_id=<?= $product->product_id ?>">Удалить</a></td>
+                        <td>
+                            <a class="btn border-dark bg-white btn-sm"
+                               href="updProdForm.php?product_id=<?= $product->product_id ?>">Изменить</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-sm"
+                               href="engine/deleteProduct.php?product_id=<?= $product->product_id ?>">Удалить</a>
+                        </td>
                     </tr>
                 <?php endwhile; ?>
                 </tbody>

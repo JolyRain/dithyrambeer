@@ -16,7 +16,7 @@ $passConfirm = isAdminSession() ? $pass : $_POST['pass-confirm'];
 
 $role = array_key_exists('role', $_POST) ? $_POST['role'] : 'user';
 
-if (signupValidate($email, $login, $pass, $passConfirm)) {
+if (isValidUserData($email, $login, $pass, $passConfirm) and !isEmptyFields($email, $login, $pass, $passConfirm)) {
     $pass = md5($pass);
     mysqli_query($connect,
         "insert into `users` (`login`, `pass`, `email`, `role`, `opin_count`) values ('$login', '$pass', '$email', '$role', '0')");
@@ -26,7 +26,7 @@ if (signupValidate($email, $login, $pass, $passConfirm)) {
     header("Location: " . $redirect);
     $connect->close();
 } else {
-    $_SESSION['message'] = signupMessage($email, $login, $pass, $passConfirm);
+    $_SESSION['message'] = userMessage($email, $login, $pass, $passConfirm);
     $_SESSION['msg-color'] = 'border-danger';
     header("Location: " . $_SERVER['HTTP_REFERER']);
     $connect->close();

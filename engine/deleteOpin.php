@@ -3,6 +3,7 @@ session_start();
 require 'scripts.php';
 if (!session_on()) {
     header('Location: ../index.php');
+    die();
 }
 require 'connect.php';
 $user_id = $_GET['user_id'];
@@ -18,18 +19,13 @@ mysqli_query($connect, "update `users` set `opin_count` = '$opin_count' where `u
 
 $product = mysqli_query($connect, "select * from `products` where `product_id`='$product_id'");
 $product = mysqli_fetch_object($product);
-print_r($product);
-print_r("<br>");
 
 $rate_result = mysqli_query($connect,
     "select `rate` from `opinions` where `user_id` = '$user_id' and `product_id` = '$product_id'");
 $rate = mysqli_fetch_object($rate_result)->rate;
-print_r('rate = '.$rate."<br>");
 $new_opin_count = $product->opin_count - 1;
-print_r('new_o_c  = '.$new_opin_count."<br>");
 
 $new_rating = $new_opin_count == 0 ? 0 : ($product->rating * $product->opin_count - $rate) / ($new_opin_count);
-print_r('new_rating  = '.$new_rating."<br>");
 mysqli_query($connect, "update `products` set `rating` = '$new_rating', `opin_count`='$new_opin_count' 
 where `product_id` = '$product_id'");
 

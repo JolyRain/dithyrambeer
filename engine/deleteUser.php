@@ -21,13 +21,13 @@ if ($products_id->num_rows > 0) {
         $rate = mysqli_fetch_object($rate_result)->rate;
         $new_opin_count = $product->opin_count - 1;
         $new_rating = ($product->rating * $product->opin_count - $rate) / ($new_opin_count);
-        mysqli_query($connect, "update `products` set `rating` = '$new_rating', `opin_count`='$new_opin_count' 
-where `product_id` = '$product->product_id'");
+        mysqli_query($connect,
+            "update `products` set `rating` = '$new_rating', `opin_count`='$new_opin_count' where `product_id` = '$product->product_id'");
     }
     mysqli_query($connect, "delete from `opinions` where `opinions`.`user_id` = '$user_id'");
 }
 
 header("Location: " . $_SERVER['HTTP_REFERER']);
 
-//$connect->close();
+$connect->close();
 

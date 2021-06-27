@@ -19,10 +19,4 @@ function isAdminSession(): bool
     return session_on() and $_SESSION['user']['role'] == 'admin';
 }
 
-function printStars($value): void
-{?>
-    <label onmouseenter="enter_label(this)" onmouseleave="leave_label()" for="<?= $name . $value ?>"
-           class="unselectable">☆</label>
-    <?php
-}
 

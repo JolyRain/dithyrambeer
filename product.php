@@ -8,6 +8,12 @@ global $connect, $MAX_RATING;
 $product_id = $_GET['product_id'];
 
 $product = mysqli_query($connect, "select * from `products` where `products`.`product_id` = '$product_id'");
+
+if ($product->num_rows == 0) {
+    header("Location: index.php");
+    die();
+}
+
 $product = mysqli_fetch_object($product);
 
 $title = $product->name;
@@ -41,26 +47,33 @@ $result = mysqli_query($connect, "select * from `opinions`
 where `opinions`.`user_id` = '$user_id' and `opinions`.`product_id` = '$product_id'");
 $hasOpinion = $result->num_rows > 0;
 $user_opin = mysqli_fetch_object($result);
-if (session_on() and !$hasOpinion): ?>
-    <div class="container w-25">
-        <div class="<?= $hasOpinion ? "row row-cols-2" : "container" ?>">
-            <div class="col">
-                <a href="<?= $hasOpinion ? "updOpinForm.php" : "addOpinForm.php" ?>?product_id=<?= $product_id ?>&user_id=<?= $user_id ?>"
-                   class="btn btn-dark  w-100"><?= $hasOpinion ? "Изменить отзыв" : "Написать отзыв" ?></a>
-            </div>
-            <?php if ($hasOpinion): ?>
-                <div class="col">
-                    <a href="engine/deleteOpin.php?product_id=<?= $product_id ?>&user_id=<?= $user_id ?>"
-                       class="btn btn-danger  w-100"><?= "Удалить отзыв" ?></a>
-                </div>
-            <?php endif; ?>
-        </div>
-    </div>
-
-<?php else: ?>
+if (!session_on()): ?>
     <div class="container w-25 ">
         <div class="container text-center">
             <h6><a href="signin.php" class="user-link text-dark w-25 ">Войдите в аккаунт, чтобы написать отзыв</a></h6>
+        </div>
+    </div>
+<?php elseif (isAdminSession()): ?>
+    <div class="container w-25">
+        <div class="row row-cols-2">
+            <div class="col">
+                <a href="updProdForm.php?product_id=<?= $product_id ?>"
+                   class="btn  text-dark border-dark w-100">Изменить товар</a>
+            </div>
+            <div class="col">
+                <a href="engine/deleteProduct.php?product_id=<?= $product_id ?>"
+                   class="btn btn-danger  w-100">Удалить товар</a>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if (!$hasOpinion and session_on()): ?>
+    <div class="mt-3 container w-25">
+        <div class="container">
+            <div class="container">
+                <a href="addOpinForm.php?product_id=<?= $product_id ?>&user_id=<?= $user_id ?>"
+                   class="btn btn-dark  w-100">Написать отзыв</a>
+            </div>
         </div>
     </div>
 <?php endif;
@@ -74,8 +87,16 @@ if ($opinions->num_rows > 0): ?>
             <div class="card border rounded-3  mb-4 shadow-sm">
                 <div class="card-header text-center bg-dark">
                     <div class="container w-25 float-start text-start">
-                        <a class="user-link fw-normal h4 text-white  text-start"
+                        <a class="user-link fw-normal h4 text-white"
                            href="user.php?user_id=<?= $user_id ?>"><?= $_SESSION['user']['login'] ?> </a>
+                    </div>
+                    <div class="container w-25 float-end text-end">
+                        <a class="text-white btn btn-sm btn-danger"
+                           href="engine/deleteOpin.php?product_id=<?= $product_id ?>&user_id=<?= $user_id ?>">Удалить</a>
+                    </div>
+                    <div class="container w-25 float-end text-end">
+                        <a class="text-dark btn btn-sm bg-white"
+                           href="updOpinForm.php?product_id=<?= $product_id ?>&user_id=<?= $user_id ?>">Изменить</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -103,11 +124,11 @@ if ($opinions->num_rows > 0): ?>
                         <a class="user-link fw-normal h4 text-white  text-start"
                            href="user.php?user_id=<?= $user_id ?>"><?= $user_login ?> </a>
                     </div>
-                    <?php if (isAdminSession()):?>
-                    <div class="container w-25 float-end text-end">
-                        <a class="text-white btn btn-sm btn-danger"
-                           href="user.php?user_id=<?= $user_id ?>">Удалить</a>
-                    </div>
+                    <?php if (isAdminSession()): ?>
+                        <div class="container w-25 float-end text-end">
+                            <a class="text-white btn btn-sm btn-danger"
+                               href="engine/deleteOpin.php?product_id=<?= $product_id ?>&user_id=<?= $user_id ?>">Удалить</a>
+                        </div>
                     <?php endif; ?>
                 </div>
                 <div class="card-body">
